@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Hangman Game</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var listOfWords = ["malcolm"];
+var chosenWord = listOfWords[Math.floor(Math.random()*listOfWords.length)];
+var lettersGuessed = [];
+var remainingGuesses = chosenWord.length + 5;
+var wins = 0;
+
+document.onkeyup = function(event) {
+
+    var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+
+    if (chosenWord.includes(userGuess)) {
+      console.log("oh yeah");
+    }
+    else {
+      console.log("guess again");
+    }
+
+}
+
+</script>
+
+<h1>Hangman</h1>
+
+<h2>Press a letter to start guessing.</h2>
+
+</body>
+
+</html>
