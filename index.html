@@ -19,49 +19,51 @@ for (var i = 0; i < chosenWord.length; i++) {
   blankWord.push("_");
 }
 
-console.log(chosenWord);
-/* for (i = chosenWord.length; i > 0; i--) {
-  displayedWord.push("_");
-} eventual loop for hidden word
+Array.prototype.contains = function (searchFor) {
+   for (i in this) {
+      if (this[i] == searchFor) return true;
+   }
+   return false;
+}
 
-document.getElementById("show-word").innerHTML = displayedWord; */
-
- /* Array.prototype.contains = function(searchFor) {
-  for (i in this) {
-    if (this[i] == searchFor) {
-      return true;
+function arraysEqual(arr1, arr2) {
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
     }
-    else {
-      return false;
-    }
-  }
-} */
+    return true;
+}
 
 document.onkeyup = function(event) {
 
     var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
 
-    if (remainingGuesses !== 0) {
-
+    if (remainingGuesses !== 0 && !arraysEqual(blankWord, chosenWord)) {
       if (chosenWord.contains(userGuess)) {
         for (var i = 0; i < chosenWord.length; i++) {
-
+          if (chosenWord[i] === userGuess) {
+            blankWord[i] = userGuess;
+          }
         }
+        remainingGuesses--;
         lettersGuessed.push(userGuess);
-        document.getElementById("guessed").innerHTML = lettersGuessed;
-        document.getElementById("guesses-left").innerHTML = remainingGuesses--;
       }
       else {
+        remainingGuesses--;
         lettersGuessed.push(userGuess);
-        document.getElementById("guessed").innerHTML = lettersGuessed;
-        document.getElementById("guesses-left").innerHTML = remainingGuesses--;
-        console.log(remainingGuesses);
       }
-
+    }
+    else if (remainingGuesses !== 0 && arraysEqual(blankWord, chosenWord)) {
+      document.write("YOU WIN");
     }
     else {
-      document.write("GAME OVER");
+      document.write("YOU LOSE");
     }
+console.log(lettersGuessed);
+console.log(chosenWord);
+console.log(blankWord);
 
 }
 
