@@ -8,20 +8,59 @@
 <script type="text/javascript">
 
 var listOfWords = ["malcolm"];
-var chosenWord = listOfWords[Math.floor(Math.random()*listOfWords.length)];
+var computerPick = listOfWords[Math.floor(Math.random()*listOfWords.length)];
+var chosenWord = computerPick.split("");
 var lettersGuessed = [];
-var remainingGuesses = chosenWord.length + 5;
+var blankWord = [];
+var remainingGuesses = chosenWord.length + 3;
 var wins = 0;
+
+for (var i = 0; i < chosenWord.length; i++) {
+  blankWord.push("_");
+}
+
+console.log(chosenWord);
+/* for (i = chosenWord.length; i > 0; i--) {
+  displayedWord.push("_");
+} eventual loop for hidden word
+
+document.getElementById("show-word").innerHTML = displayedWord; */
+
+ /* Array.prototype.contains = function(searchFor) {
+  for (i in this) {
+    if (this[i] == searchFor) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+} */
 
 document.onkeyup = function(event) {
 
     var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
 
-    if (chosenWord.includes(userGuess)) {
-      console.log("oh yeah");
+    if (remainingGuesses !== 0) {
+
+      if (chosenWord.contains(userGuess)) {
+        for (var i = 0; i < chosenWord.length; i++) {
+
+        }
+        lettersGuessed.push(userGuess);
+        document.getElementById("guessed").innerHTML = lettersGuessed;
+        document.getElementById("guesses-left").innerHTML = remainingGuesses--;
+      }
+      else {
+        lettersGuessed.push(userGuess);
+        document.getElementById("guessed").innerHTML = lettersGuessed;
+        document.getElementById("guesses-left").innerHTML = remainingGuesses--;
+        console.log(remainingGuesses);
+      }
+
     }
     else {
-      console.log("guess again");
+      document.write("GAME OVER");
     }
 
 }
@@ -31,6 +70,17 @@ document.onkeyup = function(event) {
 <h1>Hangman</h1>
 
 <h2>Press a letter to start guessing.</h2>
+
+<h2>WORD</h2>
+<!-- <h3>EVENTUALLY THE HIDDEN WORD WILL GO HERE</h3> -->
+
+<h2>Letters Guessed</h2>
+<h3 id="guessed"></h3>
+
+<h2>Remaining Guesses</h2>
+<h3 id="guesses-left"></h3>
+
+<h3>Wins</h3>
 
 </body>
 
