@@ -2,21 +2,23 @@
 <html lang="en">
 <head>
   <title>Hangman Game</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
 
 <script type="text/javascript">
-
-var listOfWords = ["malcolm"];
+var listOfWords = ["lukeskywalker", "darthvader", "macewindu", "yoda", "leiaorgana", "hansolo", "chewbacca", "r2d2", "deathstar", "stormtroopers", "anakinskywalker", "theemporer", "obi-wankenobi", "bobafett", "c-3po", "jabbathehut", "landocalrissian", "admiralackbar", "rey", "kyloren"];
 var computerPick = listOfWords[Math.floor(Math.random()*listOfWords.length)];
 var chosenWord = computerPick.split("");
 var lettersGuessed = [];
 var blankWord = [];
 var remainingGuesses = chosenWord.length + 3;
 var wins = 0;
+var losses = 0;
 
 for (var i = 0; i < chosenWord.length; i++) {
-  blankWord.push("_");
+  blankWord.push("-");
 }
 
 Array.prototype.contains = function (searchFor) {
@@ -56,33 +58,75 @@ document.onkeyup = function(event) {
       }
     }
     else if (remainingGuesses !== 0 && arraysEqual(blankWord, chosenWord)) {
-      document.write("YOU WIN");
+      wins++;
     }
     else {
-      document.write("YOU LOSE");
+      losses++;
     }
-console.log(lettersGuessed);
-console.log(chosenWord);
-console.log(blankWord);
+
+    document.getElementById("wins").innerHTML = wins;
+    document.getElementById("losses").innerHTML = losses;
+    document.getElementById("word-to-display").innerHTML = blankWord;
+    document.getElementById("guessed").innerHTML = lettersGuessed;
+    document.getElementById("guesses-left").innerHTML = remainingGuesses;
 
 }
 
 </script>
 
-<h1>Hangman</h1>
+<div class="container">
 
-<h2>Press a letter to start guessing.</h2>
+  <div class="row">
+    <div class="col-xs-12">
+      <img class="main-image" src="assets/images/starwars-title.jpg">
+    </div>
+  </div>
 
-<h2>WORD</h2>
-<!-- <h3>EVENTUALLY THE HIDDEN WORD WILL GO HERE</h3> -->
+  <div class="row">
 
-<h2>Letters Guessed</h2>
-<h3 id="guessed"></h3>
+    <div class="col-xs-2">
+    </div>
 
-<h2>Remaining Guesses</h2>
-<h3 id="guesses-left"></h3>
+    <div class="col-xs-8">
+      <h1>PRESS A LETTER TO START GUESSING!</h1>
 
-<h3>Wins</h3>
+      <br />
+
+      <h2>Guess The Word</h2>
+      <h3 id="word-to-display"></h3>
+      <hr>
+
+      <br />
+
+      <h2>Letters Guessed</h2>
+      <h3 id="guessed"></h3>
+      <hr>
+
+      <br />
+
+      <h2>Remaining Guesses</h2>
+      <h3 id="guesses-left"></h3>
+      <hr>
+
+      <br />
+
+      <h2>Wins</h2>
+      <h3 id="wins"></h3>
+      <hr>
+
+      <br />
+
+      <h2>Losses</h2>
+      <h3 id="losses"></h3>
+    </div>
+
+    <div class="col-xs-2">
+    </div>
+
+  </div>
+
+</div>
+
 
 </body>
 
