@@ -8,14 +8,16 @@
 <body>
 
 <script type="text/javascript">
-var listOfWords = ["lukeskywalker", "darthvader", "macewindu", "yoda", "leiaorgana", "hansolo", "chewbacca", "r2d2", "deathstar", "stormtroopers", "anakinskywalker", "theemporer", "obi-wankenobi", "bobafett", "c-3po", "jabbathehut", "landocalrissian", "admiralackbar", "rey", "kyloren"];
-var computerPick = listOfWords[Math.floor(Math.random()*listOfWords.length)];
-var chosenWord = computerPick.split("");
-var lettersGuessed = [];
-var blankWord = [];
-var remainingGuesses = chosenWord.length + 3;
+var listOfWords;
+var computerPick;
+var chosenWord;
+var lettersGuessed;
+var blankWord;
+var remainingGuesses;
 var wins = 0;
 var losses = 0;
+
+init();
 
 for (var i = 0; i < chosenWord.length; i++) {
   blankWord.push("-");
@@ -38,6 +40,23 @@ function arraysEqual(arr1, arr2) {
     return true;
 }
 
+function init() {
+  listOfWords = ["lukeskywalker", "darthvader", "macewindu", "yoda", "leiaorgana", "hansolo", "chewbacca", "r2d2", "deathstar", "stormtroopers", "anakinskywalker", "emperor", "obiwankenobi", "bobafett", "c3po", "jabbathehut", "landocalrissian", "admiralackbar", "rey"];
+  computerPick = listOfWords[Math.floor(Math.random()*listOfWords.length)];
+  chosenWord = computerPick.split("");
+  lettersGuessed = [];
+  blankWord = [];
+  remainingGuesses = chosenWord.length + 3;
+}
+
+function renderStats() {
+  document.getElementById("wins").innerHTML = wins;
+  document.getElementById("losses").innerHTML = losses;
+  document.getElementById("word-to-display").innerHTML = blankWord.join("-");
+  document.getElementById("guessed").innerHTML = lettersGuessed.join("-");
+  document.getElementById("guesses-left").innerHTML = remainingGuesses;
+}
+
 document.onkeyup = function(event) {
 
     var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
@@ -57,18 +76,16 @@ document.onkeyup = function(event) {
         lettersGuessed.push(userGuess);
       }
     }
-    else if (remainingGuesses !== 0 && arraysEqual(blankWord, chosenWord)) {
-      wins++;
-    }
     else {
       losses++;
+      init();
+    }
+    if (arraysEqual(blankWord, chosenWord)) {
+      wins++;
+      init();
     }
 
-    document.getElementById("wins").innerHTML = wins;
-    document.getElementById("losses").innerHTML = losses;
-    document.getElementById("word-to-display").innerHTML = blankWord;
-    document.getElementById("guessed").innerHTML = lettersGuessed;
-    document.getElementById("guesses-left").innerHTML = remainingGuesses;
+    renderStats();
 
 }
 
